@@ -1,0 +1,23 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22 # Match your Lambda Node.js runtime
+    commands:
+      - echo "Installing dependencies..."
+      - rm -rf node_modules package-lock.json
+      - npm install
+  build:
+    commands:
+      - npm run build || echo "No build step defined"
+      - echo "Building and zipping the deployment package..."
+      - zip -r build.zip src node_modules package.json package-lock.json
+      - aws s3 cp build.zip s3://codepipeline-us-east-1-44137639515/PetProPipeline/BuildArtif/deployment-package.zip --sse aws:kms
+  post_build:
+    commands:
+      - echo "Deploying to AWS Lambda..."
+      - aws lambda update-function-code --function-name GraphQL --s3-bucket codepipeline-us-east-1-44137639515 --s3-key PetProPipeline/BuildArtif/deployment-package.zip
+      #- aws lambda update-function-code --function-name GraphQL --zip-file fileb://build.zip
+artifacts:
+  files:
+    - build.zip # Specify the artifact to be uploaded
