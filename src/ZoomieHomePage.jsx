@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 export default function ZoomieHomePage() {
   return (
     <div className="zoomie-container">
-      <Navbar currentPage={"Home"} />
+      <Navbar currentPage={"home"} />
       {/* <header className="zoomie-header">
         <div className="nav-logo">
           <img src={logo} alt="Zoomie Logo" className="logo-img" />

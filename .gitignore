@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/ChatBot*.jsx
+src/ChatBot.jsx
+src/ChatBot.jsx
